@@ -1,5 +1,6 @@
 package gma.transforma;
 
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -7,6 +8,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Principal {
 	
@@ -101,10 +104,28 @@ public class Principal {
 		
 		BufferedWriter writer = new BufferedWriter(new FileWriter(_PASTA_DESTINO+"/_p_"+nomeArquivo.getName()));
 		
+		List<String> listaF=new ArrayList();
+		List<String> listaT=new ArrayList();
 		String data = null;
 		while((data = reader.readLine()) != null){
-			writer.write(data);
-			writer.newLine();
+			if(data.equals(""))
+			{
+			 listaT=_transforma((ArrayList)listaF);
+			 listaF.clear();
+			 
+			 for(String item:listaT)
+			 {
+				writer.write(item);
+				writer.newLine();
+			 }
+			 writer.newLine();
+			}
+			else
+			{
+				if(data.trim()!="")	listaF.add(data);	
+			}
+			
+			 
 		}
 		
 		fileReader.close();
@@ -112,5 +133,22 @@ public class Principal {
 		
 		writer.close();
 
+	}
+	
+	private static List<String> _transforma(ArrayList<String> listaF)
+	{
+		List<String> listaD= new ArrayList<String>();
+		
+	    
+		 String tempo_1[]= listaF.get(1).split("-->");
+		 String narrador_2=listaF.get(2);
+		 String conteudo_3=listaF.get(3);
+		 
+		
+		listaD.add("DUB ["+tempo_1[0].trim()+">"+tempo_1[1].trim()+"] "+narrador_2);
+		listaD.add(conteudo_3);
+		
+		
+		return listaD;
 	}
 }
