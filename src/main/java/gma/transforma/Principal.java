@@ -111,7 +111,7 @@ public class Principal {
 				}
 				 
 			} else {
-				// System.out.println(data);
+				 System.out.println(data);
 				if (data.trim() != "")
 					listaF.add(data);
 			}
@@ -131,22 +131,31 @@ public class Principal {
 		String tempo_1[] = listaF.get(1).split("-->");
 		String narrador_2 = listaF.get(2);
 		String narrador_lista[] = listaF.get(2).split(",");
-	//	String conteudo_3 = listaF.get(3);
+		String conteudo_3 = "";
 		
-
-		for (String nItem : narrador_lista) {
-
-			String conteudo_3 = listaF.get(3);
-			
-			listaD.add("DUB [" + tempo_1[0].trim() + ">" + tempo_1[1].trim() + "] " + nItem);
-
-			if (listaF.size() > 3) {
-				for (int i = 4; i <= listaF.size() - 1; i++) {
-					conteudo_3 = conteudo_3 + " " + listaF.get(i);
-				}
+		int xx=listaF.size();
+		
+		if (listaF.size() > 3) {
+			conteudo_3 = listaF.get(3);
+			for (int i = 3; i <= listaF.size() - 1; i++) {
+				conteudo_3 = conteudo_3 + " " + listaF.get(i);
 			}
+		}
+		
+		
+		for (String narrador_2_item : narrador_lista) {
 
-			listaD.add(conteudo_3);
+			//String conteudo_3 = listaF.get(3);
+			
+			listaD.add("DUB [" + tempo_1[0].trim() + ">" + tempo_1[1].trim() + "] " + narrador_2_item);
+
+			//if (listaF.size() > 3) {
+			//	for (int i = 4; i <= listaF.size() - 1; i++) {
+			//		conteudo_3 = conteudo_3 + " " + listaF.get(i);
+			//	}
+			//}
+
+			if(!conteudo_3.isEmpty()) listaD.add(conteudo_3);
 			listaD.add("\n");
 
 		}
