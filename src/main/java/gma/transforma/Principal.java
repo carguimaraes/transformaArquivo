@@ -142,12 +142,20 @@ public class Principal {
 	    
 		 String tempo_1[]= listaF.get(1).split("-->");
 		 String narrador_2=listaF.get(2);
-		 String conteudo_3=listaF.get(3);
+		 String conteudo_3=listaF.get(3);;
 		 
 		
 		listaD.add("DUB ["+tempo_1[0].trim()+">"+tempo_1[1].trim()+"] "+narrador_2);
+	
+		if(listaF.size()>3)
+		{
+			for(int i=4; i<=listaF.size()-1; i++)
+			{
+				conteudo_3=conteudo_3+" "+listaF.get(i);
+			}	
+		}
+	
 		listaD.add(conteudo_3);
-		
 		
 		return listaD;
 	}
