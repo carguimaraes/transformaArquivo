@@ -4,10 +4,12 @@ package gma.transforma;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,6 +101,10 @@ public class Principal {
 	{
 		System.out.println("--->procesando Transformacao arquivo: "+nomeArquivo);
 		
+		//"UTF-8"
+		
+		//BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(nomeArquivo.getAbsolutePath()), "UTF-8"));
+		
 		FileReader fileReader = new FileReader(new File(nomeArquivo.getAbsolutePath()));
 		BufferedReader reader = new BufferedReader(fileReader);
 		
@@ -122,6 +128,7 @@ public class Principal {
 			}
 			else
 			{
+				//System.out.println(data);
 				if(data.trim()!="")	listaF.add(data);	
 			}
 			
