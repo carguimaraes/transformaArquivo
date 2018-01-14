@@ -1,6 +1,12 @@
 package gma.transforma;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Principal {
 	
@@ -8,7 +14,7 @@ public class Principal {
 	private static String _PASTA_DESTINO="destino";
 	
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		boolean isOk;
 		File fileFonte;
 		File fileDestino;
@@ -71,22 +77,40 @@ public class Principal {
 		return isOk;
 	}
 	
-	private static void  _processarTransformacao(File fileFonte, File fileDestino)
+	private static void  _processarTransformacao(File fileFonte, File fileDestino) throws IOException
 	{
-		String[] listaArquivoFonte=fileFonte.list();
+		File[] listaArquivoFonte=fileFonte.listFiles();
 		System.out.println("Processando transformação...");
 		System.out.println("Total arquivos para Processar:"+listaArquivoFonte.length);
 		
-	
-		for(String item:listaArquivoFonte)
+	   
+	    
+		for(File item:listaArquivoFonte)
 		{
 			_processaArquivo(item);
 		}
 		
 	}
 	
-	private static void _processaArquivo(String nomeArquivo)
+	private static void _processaArquivo(File nomeArquivo) throws IOException
 	{
 		System.out.println("--->procesando Transformacao arquivo: "+nomeArquivo);
+		
+		FileReader fileReader = new FileReader(new File(nomeArquivo.getAbsolutePath()));
+		BufferedReader reader = new BufferedReader(fileReader);
+		
+		BufferedWriter writer = new BufferedWriter(new FileWriter(_PASTA_DESTINO+"/_p_"+nomeArquivo.getName()));
+		
+		String data = null;
+		while((data = reader.readLine()) != null){
+			writer.write(data);
+			writer.newLine();
+		}
+		
+		fileReader.close();
+		reader.close();
+		
+		writer.close();
+
 	}
 }
