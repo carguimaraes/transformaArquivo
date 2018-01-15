@@ -155,6 +155,8 @@ public class Principal {
 		
 
 		String tempo_1[] = listaF.get(1).split("-->");
+		String tempo_1_A=tempo_1[0].trim().replace(".",":");
+		String tempo_1_B=tempo_1[1].trim().replace(".",":");
 		String narrador_lista[] = listaF.get(2).split(",");
 		String conteudo_3 = "";
 		
@@ -172,14 +174,14 @@ public class Principal {
 		
 		for (String narrador_2_item : narrador_lista) {
 							
-			listaD.add("DUB [" + tempo_1[0].trim() + ">" + tempo_1[1].trim() + "] " + narrador_2_item.trim());
+			listaD.add("DUB[0 N " + tempo_1_A + ">" + tempo_1_B + "] " + narrador_2_item.trim());
 
 			if(!conteudo_3.isEmpty()) listaD.add(conteudo_3);
 			listaD.add("\n");
 			
 			
 		}
-		listaEstrutura.add(new Estrutura(tempo_1[0],listaD));
+		listaEstrutura.add(new Estrutura(tempo_1_A,listaD));
 		 
 		return listaEstrutura;
 	}
