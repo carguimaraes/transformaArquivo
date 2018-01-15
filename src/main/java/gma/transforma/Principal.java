@@ -38,6 +38,7 @@ public class Principal {
 		if (isOk)
 			_processarTransformacao(fileFonte, fileDestino);
 
+		System.out.println();
 		System.out.println("Fim processamento");
 	}
 
@@ -78,8 +79,9 @@ public class Principal {
 	private static void _processarTransformacao(File fileFonte, File fileDestino) throws IOException {
 		File[] listaArquivoFonte = fileFonte.listFiles();
 		System.out.println("Processando transformação...");
+		System.out.println();
 		System.out.println("Total arquivos para Processar:" + listaArquivoFonte.length);
-
+		System.out.println();
 		for (File item : listaArquivoFonte) {
 			_processaArquivo(item);
 		}
@@ -87,6 +89,7 @@ public class Principal {
 	}
 
 	private static void _processaArquivo(File nomeArquivo) throws IOException {
+	 
 		System.out.println("--->procesando Transformacao arquivo: " + nomeArquivo);
 
 		// "UTF-8"
@@ -99,9 +102,9 @@ public class Principal {
 
 		BufferedWriter writer = new BufferedWriter(new FileWriter(_PASTA_DESTINO + "/_p_" + nomeArquivo.getName()));
 
-		List<String> listaF = new ArrayList();
-		List<Estrutura> listaT = new ArrayList();
-		List<Estrutura> listaEstrutura= new ArrayList<Estrutura>();
+		List<String> listaF = new ArrayList<>();
+		List<Estrutura> listaT = new ArrayList<>();
+		List<Estrutura> listaEstrutura= new ArrayList<>();
 		
 		String data = null;
 		while ((data = reader.readLine()) != null) {
@@ -157,11 +160,11 @@ public class Principal {
 		String tempo_1[] = listaF.get(1).split("-->");
 		String tempo_1_A=tempo_1[0].trim().replace(".",":");
 		String tempo_1_B=tempo_1[1].trim().replace(".",":");
-		String narrador_lista[] = listaF.get(2).split(",");
+		String narrador_lista_2[] = listaF.get(2).split(",");
 		String conteudo_3 = "";
 		
 		 
-		
+		//Coloca todo o conteudo numa unica linha - conteudo: fala
 		if (listaF.size() > 3) {
 			conteudo_3 = ""; //listaF.get(3);
 			for (int i = 3; i <= listaF.size() - 1; i++) {
@@ -171,8 +174,8 @@ public class Principal {
 		conteudo_3=conteudo_3.trim();
 		
 		  
-		
-		for (String narrador_2_item : narrador_lista) {
+		//cria bloco para cada narrador
+		for (String narrador_2_item : narrador_lista_2) {
 							
 			listaD.add("DUB[0 N " + tempo_1_A + ">" + tempo_1_B + "] " + narrador_2_item.trim());
 
