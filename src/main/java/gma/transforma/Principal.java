@@ -10,6 +10,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class Principal {
@@ -98,25 +100,47 @@ public class Principal {
 		BufferedWriter writer = new BufferedWriter(new FileWriter(_PASTA_DESTINO + "/_p_" + nomeArquivo.getName()));
 
 		List<String> listaF = new ArrayList();
-		List<String> listaT = new ArrayList();
+		List<Estrutura> listaT = new ArrayList();
+		List<Estrutura> listaEstrutura= new ArrayList<Estrutura>();
+		
 		String data = null;
 		while ((data = reader.readLine()) != null) {
+			//System.out.println(data);
 			if (data.equals("")) {
-				listaT = _transforma((ArrayList) listaF);
+				listaT = _transforma(listaF);
+				for(Estrutura item: listaT) listaEstrutura.add(item);
+				
 				listaF.clear();
-
-				for (String item : listaT) {
-					writer.write(item);
-					writer.newLine();
-				}
 				 
 			} else {
-				 System.out.println(data);
+				
 				if (data.trim() != "")
 					listaF.add(data);
 			}
 
 		}
+	 
+		
+		if(!listaF.isEmpty())
+		{
+			listaT = _transforma(listaF);
+			for(Estrutura item: listaT) listaEstrutura.add(item);
+		}
+		
+	 
+		
+	    Collections.sort(listaEstrutura);
+		 
+		for(Estrutura item:listaEstrutura)
+		{
+			//System.out.println(item.getChave());
+			for (String item2 : item.getBloco()) {
+				writer.write(item2);
+				writer.newLine();
+			}
+			
+		}
+		
 
 		fileReader.close();
 		reader.close();
@@ -125,40 +149,62 @@ public class Principal {
 
 	}
 
-	private static List<String> _transforma(ArrayList<String> listaF) {
+	private static List<Estrutura> _transforma(List<String> listaF) {
 		List<String> listaD = new ArrayList<String>();
+		List<Estrutura>listaEstrutura= new ArrayList<Estrutura>();
+		
 
 		String tempo_1[] = listaF.get(1).split("-->");
-		String narrador_2 = listaF.get(2);
 		String narrador_lista[] = listaF.get(2).split(",");
 		String conteudo_3 = "";
 		
-		int xx=listaF.size();
+		 
 		
 		if (listaF.size() > 3) {
-			conteudo_3 = listaF.get(3);
+			conteudo_3 = ""; //listaF.get(3);
 			for (int i = 3; i <= listaF.size() - 1; i++) {
 				conteudo_3 = conteudo_3 + " " + listaF.get(i);
 			}
 		}
+		conteudo_3=conteudo_3.trim();
 		
+		  
 		
 		for (String narrador_2_item : narrador_lista) {
-
-			//String conteudo_3 = listaF.get(3);
-			
-			listaD.add("DUB [" + tempo_1[0].trim() + ">" + tempo_1[1].trim() + "] " + narrador_2_item);
-
-			//if (listaF.size() > 3) {
-			//	for (int i = 4; i <= listaF.size() - 1; i++) {
-			//		conteudo_3 = conteudo_3 + " " + listaF.get(i);
-			//	}
-			//}
+							
+			listaD.add("DUB [" + tempo_1[0].trim() + ">" + tempo_1[1].trim() + "] " + narrador_2_item.trim());
 
 			if(!conteudo_3.isEmpty()) listaD.add(conteudo_3);
 			listaD.add("\n");
-
+			
+			
 		}
-		return listaD;
+		listaEstrutura.add(new Estrutura(tempo_1[0],listaD));
+		 
+		return listaEstrutura;
+	}
+}
+
+class Estrutura implements Comparable{
+	
+	private String _chave;
+	private List<String> _bloco;
+	
+	public String getChave() {return _chave;};
+	public List<String> getBloco() {return _bloco;};
+	
+	
+	public Estrutura(String chave, List<String> bloco)
+	{
+		this._chave=chave;
+		this._bloco=bloco;
+	}
+	public int compareTo(Object obj) {
+	 
+		  Estrutura est=(Estrutura) obj;
+		
+		  return this._chave.compareTo(est._chave);
+		
+		
 	}
 }
